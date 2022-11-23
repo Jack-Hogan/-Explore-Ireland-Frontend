@@ -7,16 +7,20 @@ import { AppComponent } from './app.component';
 import { LocationService } from './location.service';
 
 import { GoogleMapsModule } from '@angular/google-maps';
+import { ApiLocationComponent } from './api-location/api-location.component';
+import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    ApiLocationComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     FormsModule,
-    GoogleMapsModule
+    GoogleMapsModule,
+    AppRoutingModule
   ],
   providers: [LocationService],
   bootstrap: [AppComponent]
