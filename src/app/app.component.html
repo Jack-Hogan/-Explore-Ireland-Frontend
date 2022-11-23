@@ -2,18 +2,30 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/boxicons/2.1.0/css/boxicons.min.css" integrity="sha512-pVCM5+SN2+qwj36KonHToF2p1oIvoU3bsqxphdOIWMYmgr4ZqD3t5DjKvvetKhXGc/ZG5REYTT6ltKfExEei/Q==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 
+<router-outlet></router-outlet>
+
+
 <div class="topnav">
     <a class="active" href="#news">Map</a>
     <a href="#contact">Favourites</a>
     <a href="#about">Logout</a>
   </div>
 
-<!-- <div class="full" id="map">         
-</div> -->
 
+
+ 
+
+
+
+
+
+
+<div class="full" id="map">         
+</div>
+<!-- 
 <div class="my-google-map">
     <google-map></google-map>
-</div>
+</div> -->
 
 
 
@@ -59,13 +71,18 @@
                         <li><a class="dropdown-item" href="#">Something else here</a></li>
                     </ul>
                 </div>
+
+                <form class="form-inline my-2 my-lg-0">
+                    <input type="search" (ngModelChange)="searchLocations(key.value)" #key="ngModel" ngModel
+                     name="key" id="searchName" class="form-control mr-sm-2" placeholder="Search locations..." required>
+                 </form>
             </div>
         </div>
     </div>
 
 
 
-
+    <!--Location Rows-->
     <div class="row">
         <div class="col-lg-12">
             <div class="">
@@ -98,7 +115,7 @@
                                             <a (click)="onViewLocation(location)" data-bs-placement="top" title="Edit" class="px-2 text-primary"><i class="bx bx-pencil font-size-18"></i></a>
                                         </li>
                                         <li class="list-inline-item">
-                                            <a href="javascript:void(0);" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete" class="px-2 text-danger"><i class="bx bx-trash-alt font-size-18"></i></a>
+                                            <a (click)="onOpenModal(location, 'delete')" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete" class="px-2 text-danger"><i class="bx bx-trash-alt font-size-18"></i></a>
                                         </li>
                                         <li class="list-inline-item dropdown">
                                             <a class="text-muted dropdown-toggle font-size-18 px-2" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true"><i class="bx bx-dots-vertical-rounded"></i></a>
@@ -116,6 +133,8 @@
             </div>
         </div>
     </div>
+
+    <!--Footer Div-->
     <div class="row g-0 align-items-center pb-4">
         <div class="col-sm-6">
             <div><p class="mb-sm-0">Showing {{locations.length}} favorite locations</p></div>
@@ -197,4 +216,32 @@
     </div>
     </div>
 
+<!-- Delete Modal -->
+<div class="modal fade" id="deleteLocationModal" tabindex="-1" role="dialog" aria-labelledby="deleteModelLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+       <div class="modal-content">
+          <div class="modal-header">
+             <h5 class="modal-title" id="deleteModelLabel">Delete Location</h5>
+             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+             <span aria-hidden="true">&times;</span>
+             </button>
+          </div>
+          <div class="modal-body">
+             <p>Are you sure you want to delete location {{deleteLocation?.name}}?</p>
+             <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                <button (click)="onDeleteLocation(deleteLocation?.id)" class="btn btn-danger" data-dismiss="modal">Yes</button>
+             </div>
+          </div>
+       </div>
+    </div>
+  </div>
 </div>
+
+  <!-- Notification for no locations -->
+<div *ngIf="locations?.length == 0" class="col-lg-12 col-md-12 col-xl-12">
+<div class="alert alert-info" role="alert">
+    <h4 class="alert-heading">No Favourites!</h4>
+    <p>No favourite locations were found.</p>
+</div>
+
