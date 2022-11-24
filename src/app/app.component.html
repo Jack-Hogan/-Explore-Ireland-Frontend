@@ -2,16 +2,15 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/boxicons/2.1.0/css/boxicons.min.css" integrity="sha512-pVCM5+SN2+qwj36KonHToF2p1oIvoU3bsqxphdOIWMYmgr4ZqD3t5DjKvvetKhXGc/ZG5REYTT6ltKfExEei/Q==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 
-<router-outlet></router-outlet>
 
 
 <div class="topnav">
-    <a class="active" href="#news">Map</a>
-    <a href="#contact">Favourites</a>
-    <a href="#about">Logout</a>
+    <a class="active" href="#">Map</a>
+    <a href="/apiLocations">Favourites</a>
+    <a href="#logout">Logout</a>
   </div>
 
-
+<router-outlet></router-outlet>
 
  
 
@@ -34,7 +33,7 @@
     <div class="row align-items-center" id="bottomnavbar">
         <div class="col-md-6">
             <div class="mb-3">
-                <h5 class="card-title">Saved Locations <span class="text-muted fw-normal ms-2">({{locations.length}})</span></h5>
+                <h5 class="card-title">Saved Locations <span class="text-muted fw-normal ms-2">{{arraySize}}</span></h5>
             </div>
         </div>
         <div class="col-md-6">
@@ -137,7 +136,7 @@
     <!--Footer Div-->
     <div class="row g-0 align-items-center pb-4">
         <div class="col-sm-6">
-            <div><p class="mb-sm-0">Showing {{locations.length}} favorite locations</p></div>
+            <div><p class="mb-sm-0">Showing favorite locations</p></div>
         </div>
         <div class="col-sm-6">
             <div class="float-sm-end">
@@ -238,10 +237,10 @@
   </div>
 </div>
 
-  <!-- Notification for no locations -->
+  <!-- Notification for no locations
 <div *ngIf="locations?.length == 0" class="col-lg-12 col-md-12 col-xl-12">
 <div class="alert alert-info" role="alert">
     <h4 class="alert-heading">No Favourites!</h4>
     <p>No favourite locations were found.</p>
-</div>
+</div> -->
 

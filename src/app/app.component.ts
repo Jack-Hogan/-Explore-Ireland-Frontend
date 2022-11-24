@@ -20,15 +20,20 @@ export class AppComponent implements OnInit {
 
 
   public locations: Location[];
+
   public editLocation: Location;
   public deleteLocation: Location;
   public viewLocation: Location;
+
+  public arraySize;
   map: google.maps.Map;
 
   constructor(private locationService: LocationService) { }
 
   ngOnInit() {
       this.getLocations();
+
+
 
       let loader = new Loader({
 
@@ -50,6 +55,7 @@ export class AppComponent implements OnInit {
     this.locationService.getLocations().subscribe(
       (response: Location[]) =>{
         this.locations = response;
+        this.arraySize = this.locations.length;
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
@@ -134,10 +140,10 @@ export class AppComponent implements OnInit {
 
 // }
 
-    this.locations = results;
-    if (results.length === 0 || !key){
-      this.getLocations();
-    }
+    // this.locations = results;
+    // if (results.length === 0 || !key){
+    //   this.getLocations();
+    // }
   }
 
 

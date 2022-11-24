@@ -29,7 +29,7 @@ body{margin-top:20px;
   
   /* Add a color to the active/current link */
   .topnav a.active {
-    background-color: #04AA6D;
+    background-color: #9b790b;
     color: white;
   }
   /*Bottom Navbar*/
@@ -75,7 +75,7 @@ body{margin-top:20px;
   }
   
   a {
-      color: #3b76e1;
+      color: #3be143;
       text-decoration: none;
   }
   
@@ -100,7 +100,7 @@ body{margin-top:20px;
   
   .avatar-title {
       align-items: center;
-      background-color: #3b76e1;
+      background-color: #e19f3b;
       color: #fff;
       display: flex;
       font-weight: 500;

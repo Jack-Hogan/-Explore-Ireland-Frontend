@@ -1,1 +1,31 @@
-<p>api-location works!</p>
+<div class="container">
+
+
+
+  <form class="form-inline my-2 my-lg-0">
+    <input type="search"  #key="ngModel" ngModel
+     name="key" id="searchName" class="form-control mr-sm-2" placeholder="Search locations..." required>
+ </form>
+ <!-- <button (click)="getApiLocations">Show API</button> -->
+
+    <table class="table table-bordered table-striped">
+      <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Address</th>
+        <th>Tags</th>
+
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let apiLocation of apiLocations">
+        <td><span>{{apiLocation.id}}</span></td>
+        <td><span>{{apiLocation.name}}</span></td>
+        <td><span>{{apiLocation.tags}}</span></td>
+        <td><span>{{apiLocation.url}}</span></td>
+
+      </tr>
+      </tbody>
+    </table>
+  </div>

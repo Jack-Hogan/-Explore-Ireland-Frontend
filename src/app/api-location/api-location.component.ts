@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { AttractionService } from '../attraction.service';
 
-export class apiLocations{
+export class apiLocation{
   id: number 
   name: string;
   url: string;
@@ -22,8 +23,25 @@ export class apiLocations{
 })
 export class ApiLocationComponent implements OnInit {
 
-  public apiLocations: apiLocations[];
+  // title: 'apiData';
+  // newdata:any;
 
+
+  // constructor(
+  //   private _apiservie: AttractionService
+  // ) { }
+
+
+  // ngOnInit(): void {
+  //     this._apiservie.getAttractions().subscribe(
+  //       res=>{
+  //         this.newdata=res;
+  //       }
+  //     )
+  // }
+
+
+  public apiLocations: apiLocation[];
 
   constructor(
     private httpClient: HttpClient
@@ -34,7 +52,7 @@ export class ApiLocationComponent implements OnInit {
   }
 
   public getApiLocations(){
-    this.httpClient.get<any>('https://failteireland.azure-api.net/opendata-api/v1/activities?').subscribe(
+    this.httpClient.get<any>('https://failteireland.azure-api.net/opendata-api/v1/activities').subscribe(
       response => {
         console.log(response);
         this.apiLocations = response;
