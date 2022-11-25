@@ -9,11 +9,13 @@ import { LocationService } from './location.service';
 import { GoogleMapsModule } from '@angular/google-maps';
 import { ApiLocationComponent } from './api-location/api-location.component';
 import { AppRoutingModule } from './app-routing.module';
+import { FavouritesComponent } from './favourites/favourites.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ApiLocationComponent
+    ApiLocationComponent,
+    FavouritesComponent
   ],
   imports: [
     BrowserModule,

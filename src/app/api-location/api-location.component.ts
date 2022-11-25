@@ -1,18 +1,18 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { AttractionService } from '../attraction.service';
 
-export class apiLocation{
-  id: number 
+export class Attraction{
   name: string;
-  url: string;
-  phone: string;
-  longitude: string;
-  latitude: string;
-  addressRegion: string;
-  addressLocality: string;
-  addressCountry: string;
-  tags: string;
+  // url: string;
+  // telephone: string;
+
+  // longitude: string;
+  // latitude: string;
+  // addressRegion: string;
+  // addressLocality: string;
+  // addressCountry: string;
+  // tags: string;
 }
 
 
@@ -23,41 +23,92 @@ export class apiLocation{
 })
 export class ApiLocationComponent implements OnInit {
 
-  // title: 'apiData';
-  // newdata:any;
+
+  public searchWord;
 
 
   // constructor(
-  //   private _apiservie: AttractionService
+  //   private attractionService: AttractionService
   // ) { }
 
 
-  // ngOnInit(): void {
-  //     this._apiservie.getAttractions().subscribe(
-  //       res=>{
-  //         this.newdata=res;
+  // ngOnInit(): void {}
+        
+
+  // public getAttractions(searchWord: any){
+  //   console.log('getting locations..', this.searchWord);
+  //     this.attractionService.listAttractions().subscribe(
+
+  //       (response: Attraction[]) =>{
+  //         this.attractions = response;
+  //       },
+  //       (error: HttpErrorResponse) => {
+  //         alert(error.message);
   //       }
-  //     )
+  //     ) 
+  //   }
+
+      
   // }
 
 
-  public apiLocations: apiLocation[];
+  //public apiLocations: Location[];
+
+  public Attractions: any[];
+  public favouriteAttraction;
+
+
+  // constructor(
+  //   private httpClient: HttpClient
+  // ) { }
+
+  // ngOnInit(): void {
+  //   this.getApiLocations();
+  // }
+
+  // public getApiLocations(){
+  //   this.httpClient.get<any>(`https://failteireland.azure-api.net/opendata-api/v1/activities`).subscribe(
+  //     (data) => {
+
+  //       console.log(data);
+  //       this.Attractions = data.results;
+  //     }
+  //   );
+  // }
 
   constructor(
-    private httpClient: HttpClient
+    private attractionService: AttractionService
   ) { }
 
-  ngOnInit(): void {
-    this.getApiLocations();
+
+
+    ngOnInit(): void {
+
+      this.getApiLocations();
   }
 
   public getApiLocations(){
-    this.httpClient.get<any>('https://failteireland.azure-api.net/opendata-api/v1/activities').subscribe(
-      response => {
-        console.log(response);
-        this.apiLocations = response;
+    this.attractionService.getAllAttractions().subscribe(
+      (data) => {
+
+        console.log(data);
+        this.Attractions = data.results;
       }
     );
+  }
+
+  public addLocationToFavourites(attraction: Attraction){
+
+    console.log(attraction);
+    this.attractionService.addAttraction(attraction).subscribe(
+      (response: Attraction) => {
+        console.log(response);
+        this.getApiLocations;
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      }
+    )
   }
 
 }
