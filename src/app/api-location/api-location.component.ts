@@ -4,15 +4,16 @@ import { AttractionService } from '../attraction.service';
 
 export class Attraction{
   name: string;
-  // url: string;
-  // telephone: string;
+  url: string;
+  telephone: string;
 
-  // longitude: string;
-  // latitude: string;
-  // addressRegion: string;
-  // addressLocality: string;
-  // addressCountry: string;
-  // tags: string;
+  geo : any;
+  longitude: string;
+  latitude: string;
+  addressRegion: string;
+  addressLocality: string;
+  addressCountry: string;
+  tags: any[];
 }
 
 
@@ -27,54 +28,9 @@ export class ApiLocationComponent implements OnInit {
   public searchWord;
 
 
-  // constructor(
-  //   private attractionService: AttractionService
-  // ) { }
-
-
-  // ngOnInit(): void {}
-        
-
-  // public getAttractions(searchWord: any){
-  //   console.log('getting locations..', this.searchWord);
-  //     this.attractionService.listAttractions().subscribe(
-
-  //       (response: Attraction[]) =>{
-  //         this.attractions = response;
-  //       },
-  //       (error: HttpErrorResponse) => {
-  //         alert(error.message);
-  //       }
-  //     ) 
-  //   }
-
-      
-  // }
-
-
-  //public apiLocations: Location[];
-
   public Attractions: any[];
   public favouriteAttraction;
 
-
-  // constructor(
-  //   private httpClient: HttpClient
-  // ) { }
-
-  // ngOnInit(): void {
-  //   this.getApiLocations();
-  // }
-
-  // public getApiLocations(){
-  //   this.httpClient.get<any>(`https://failteireland.azure-api.net/opendata-api/v1/activities`).subscribe(
-  //     (data) => {
-
-  //       console.log(data);
-  //       this.Attractions = data.results;
-  //     }
-  //   );
-  // }
 
   constructor(
     private attractionService: AttractionService
@@ -110,5 +66,41 @@ export class ApiLocationComponent implements OnInit {
       }
     )
   }
+
+  public searchAttractions(searchWord: string): void {
+
+
+    console.log('Getting results', this.searchWord);
+    this.attractionService.searchAllAttractions(searchWord).subscribe(
+      (response) => {
+        this.Attractions = response.results;
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      }
+    )
+
+    // const results: Attraction[] = [];
+    // for(const attraction of this.Attractions){
+    //   if(attraction.name.toLowerCase().indexOf(searchWord.toLowerCase())  !== -1
+    //   || attraction.address.addressRegion.toLowerCase().indexOf(searchWord.toLowerCase())  !== -1
+    //   || attraction.address.addressLocality.toLowerCase().indexOf(key.toLowerCase())  !== -1
+    //   || attraction.tags.toLowerCase().indexOf(key.toLowerCase())  !== -1){
+    //     results.push(attraction);
+
+    //     // var latitude = parseFloat(location.latitude);
+    //     // var longitude = parseFloat(location.longitude);
+      
+
+    //     // const marker = new google.maps.Marker({
+    //     //   position: {lat: latitude,lng: longitude},
+    //     //   map:this.map
+    //     // }  )
+
+        
+    //   }
+    // }
+  }
+
 
 }

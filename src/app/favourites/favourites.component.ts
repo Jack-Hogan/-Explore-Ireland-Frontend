@@ -90,17 +90,17 @@ export class FavouritesComponent implements OnInit {
   public searchLocations(key: string): void {
 
 
-    let loader = new Loader({
-      apiKey: 'AIzaSyAtnef-bUY0IzKCU7AB2cw51swb9sjxftA'
-    })
+    // let loader = new Loader({
+    //   apiKey: 'AIzaSyAtnef-bUY0IzKCU7AB2cw51swb9sjxftA'
+    // })
   
-    loader.load().then(() => {
-      this.map = new google.maps.Map(document.getElementById('map'),{
-        mapTypeId: 'terrain',
-        center: {lat: latitude, lng:longitude},
-        zoom: 11,
-        styles: styles
-      })})
+    // loader.load().then(() => {
+    //   this.map = new google.maps.Map(document.getElementById('map'),{
+    //     mapTypeId: 'terrain',
+    //     center: {lat: latitude, lng:longitude},
+    //     zoom: 11,
+    //     styles: styles
+    //   })})
    
     const results: Location[] = [];
     for(const location of this.locations){
@@ -110,14 +110,14 @@ export class FavouritesComponent implements OnInit {
       || location.addressRegion.toLowerCase().indexOf(key.toLowerCase())  !== -1){
         results.push(location);
 
-        var latitude = parseFloat(location.latitude);
-        var longitude = parseFloat(location.longitude);
+        // var latitude = parseFloat(location.latitude);
+        // var longitude = parseFloat(location.longitude);
       
 
-        const marker = new google.maps.Marker({
-          position: {lat: latitude,lng: longitude},
-          map:this.map
-        }  )
+        // const marker = new google.maps.Marker({
+        //   position: {lat: latitude,lng: longitude},
+        //   map:this.map
+        // }  )
 
         
       }
@@ -128,8 +128,8 @@ public onViewLocation(location: Location): void{
 
   this.viewLocation = location;
 
-  var latitude = parseFloat(location.latitude);
-  var longitude = parseFloat(location.longitude);
+  var latitude = parseFloat(location.geo.latitude);
+  var longitude = parseFloat(location.geo.longitude);
 
   let loader = new Loader({
     apiKey: 'AIzaSyAtnef-bUY0IzKCU7AB2cw51swb9sjxftA'

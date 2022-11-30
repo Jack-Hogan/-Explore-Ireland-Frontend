@@ -17,8 +17,15 @@ export class AttractionService {
     return this.httpClient.get(`https://failteireland.azure-api.net/opendata-api/v1/activities`);
   }
 
-  public addAttraction(attraction: Attraction): Observable<Attraction>{
-    return this.httpClient.post<Attraction>(`${this.apiServerUrl}/location/add`, attraction);
+
+  public searchAllAttractions(searchWord: String): Observable<any>{
+    return this.httpClient.get(`https://failteireland.azure-api.net/opendata-api/v1/activities?$filter=search.ismatch('${searchWord}','tags')`);
+  }
+
+
+  public addAttraction(location: Attraction): Observable<Attraction>{
+    console.log(location.name)
+    return this.httpClient.post<Attraction>(`${this.apiServerUrl}/location/add`, location);
   }
 
 

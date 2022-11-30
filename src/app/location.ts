@@ -1,8 +1,10 @@
 export interface Location {
+    geo: any;
+    address: any;
     id: number 
     name: string;
     url: string;
-    phone: string;
+    telephone: string;
     longitude: string;
     latitude: string;
     addressRegion: string;

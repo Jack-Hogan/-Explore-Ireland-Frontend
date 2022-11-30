@@ -10,6 +10,7 @@ import { GoogleMapsModule } from '@angular/google-maps';
 import { ApiLocationComponent } from './api-location/api-location.component';
 import { AppRoutingModule } from './app-routing.module';
 import { FavouritesComponent } from './favourites/favourites.component';
+import { AttractionService } from './attraction.service';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,7 @@ import { FavouritesComponent } from './favourites/favourites.component';
     GoogleMapsModule,
     AppRoutingModule
   ],
-  providers: [LocationService],
+  providers: [LocationService,AttractionService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
