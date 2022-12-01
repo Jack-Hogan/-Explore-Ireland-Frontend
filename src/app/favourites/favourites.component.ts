@@ -1,7 +1,9 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { GoogleMap, GoogleMapsModule } from '@angular/google-maps';
 import { Loader } from '@googlemaps/js-api-loader';
+import { map } from 'rxjs';
 import { Location } from '../location';
 
 import { LocationService } from '../location.service';
@@ -23,6 +25,11 @@ export class FavouritesComponent implements OnInit {
   public arraySize;
   map: google.maps.Map;
 
+
+  public markers : any[];
+
+
+
   constructor(private locationService: LocationService) { }
 
   ngOnInit() {
@@ -36,15 +43,34 @@ export class FavouritesComponent implements OnInit {
       })
 
       loader.load().then(() => {
-        new google.maps.Map(document.getElementById('map'),{
+        const map = new google.maps.Map(document.getElementById('map'),{
           mapTypeId: 'terrain',
           center: {lat: 53.56517289887375, lng:-7.762365749791302},
           zoom: 7,
           styles: styles
-        })
-      })
+        });
 
-  }
+        this.locations.forEach(location =>{
+
+          console.log(location.name,location.geo)
+  
+          var latitude = parseFloat(location.geo.latitude);
+          var longitude = parseFloat(location.geo.longitude);
+    
+          new google.maps.Marker({
+            position: {lat: latitude, lng: longitude},
+            map,
+            title: location.name
+          });
+    
+         
+
+      })
+      
+      
+      })
+    }
+
 
   public getLocations(): void {
     this.locationService.getLocations().subscribe(
@@ -75,10 +101,12 @@ export class FavouritesComponent implements OnInit {
   }
 
   public onDeleteLocation(locationId: number): void {
+    console.log(location)
     this.locationService.deleteLocation(locationId).subscribe(
       (response: void) => {
         console.log(response);
         this.getLocations();
+        window.location.reload();
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
@@ -131,24 +159,17 @@ public onViewLocation(location: Location): void{
   var latitude = parseFloat(location.geo.latitude);
   var longitude = parseFloat(location.geo.longitude);
 
-  let loader = new Loader({
-    apiKey: 'AIzaSyAtnef-bUY0IzKCU7AB2cw51swb9sjxftA'
+  this.map = new google.maps.Map(document.getElementById('map'),{
+    mapTypeId: 'terrain',
+    center: {lat: latitude, lng:longitude},
+    zoom: 11,
+    styles: styles
   })
 
-  loader.load().then(() => {
-    this.map = new google.maps.Map(document.getElementById('map'),{
-      mapTypeId: 'terrain',
-      center: {lat: latitude, lng:longitude},
-      zoom: 11,
-      styles: styles
-    })
-
-    const marker = new google.maps.Marker({
-      position: {lat: latitude,lng: longitude},
-      map:this.map
-    }  )
-
-  })
+  new google.maps.Marker({
+    position: {lat: latitude,lng: longitude},
+    map:this.map
+  }  )
   
 }
 

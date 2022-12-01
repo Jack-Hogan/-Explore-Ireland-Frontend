@@ -1,5 +1,5 @@
 body{margin-top:20px;
-  background-color:rgb(0, 134, 34);
+  background-color:rgb(255, 255, 255);
   }
 
 
@@ -23,8 +23,8 @@ body{margin-top:20px;
   
   /* Change the color of links on hover */
   .topnav a:hover {
-    background-color: #ddd;
-    color: black;
+    background-color: rgb(230, 188, 99);
+    color: rgb(0, 0, 0);
   }
   
   /* Add a color to the active/current link */
@@ -40,7 +40,8 @@ body{margin-top:20px;
   /*Table cContents*/
   .project-list-table {
       border-collapse: separate;
-      border-spacing: 0 12px
+      border-spacing: 0 12px;
+      
   }
   
   .project-list-table tr {
@@ -110,5 +111,17 @@ body{margin-top:20px;
   }
   .bg-soft-primary {
       background-color: rgba(59,118,225,.25)!important;
+  }
+
+
+  #saveIcon {
+
+    cursor: pointer;
+    
+    
+  }
+
+  html {
+    scroll-behavior: smooth;
   }
   

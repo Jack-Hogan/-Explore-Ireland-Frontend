@@ -2,6 +2,7 @@
 
 
 
+
   <form class="form-inline my-2 my-lg-0">
     <input type="text" [(ngModel)]="searchWord" #key="ngModel" ngModel="Search"
      name="search" class="form-control mr-sm-2" placeholder="Search locations..." required>
@@ -30,6 +31,15 @@
     </table> -->
 
 
+    <!--Successful addLocation Alert-->
+    <div  *ngIf="addSuccessAlert == true"  class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>Saved to favourites!</strong> You have successfully saved (location)to your favourites!
+        <button type="button" (click)="clearAlert()" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+
 
 
 
@@ -49,15 +59,13 @@
                               <th scope="col">Location Name</th>
                               <th scope="col">Address</th>
                               <th scope="col">Phone</th>
-                              <th scope="col">Geo Location</th>
-                              <th scope="col">Geo</th>
+                              <!-- <th scope="col">Geo Location</th> -->
 
                               <th scope="col" style="width: 100%;">Action</th>
                           </tr>
                       </thead>
                       <tbody *ngFor="let attraction of Attractions" >
-
-           
+                                   
                           <tr>
                           
                               <th scope="row" class="ps-4">
@@ -67,12 +75,12 @@
                               <td><span class="badge badge-soft-success mb-0">{{attraction?.address.addressLocality}}, {{attraction?.address.addressRegion}}</span></td>
                               
                               <td>{{attraction?.telephone}}</td>
-                              <td>{{attraction?.geo.longitude}}, {{attraction?.geo.latitude}}</td>
+                              <!-- <td>{{attraction?.geo.longitude}}, {{attraction?.geo.latitude}}</td> -->
 
                               <td>
                                   <ul class="list-inline mb-0">
                                       <li class="list-inline-item">
-                                          <a (click)="addLocationToFavourites(attraction)" data-bs-placement="top" title="Edit" class="px-2 text-primary"><i class="bx bx-pencil font-size-18"></i></a>
+                                          <a (click)="addLocationToFavourites(attraction)" data-toggle="modal" data-target="#exampleModal"  data-bs-placement="top" title="Save" class="px-2 text-primary"><i id="saveIcon" class="bx bx-star font-size-18"></i></a>
                                       </li>
                                       <li class="list-inline-item">
                                           <a  data-bs-toggle="tooltip" data-bs-placement="top" title="Delete" class="px-2 text-danger"><i class="bx bx-trash-alt font-size-18"></i></a>
@@ -93,4 +101,25 @@
           </div>
       </div>
   </div>
+  </div>
+
+  <!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">{{attraction?.name}}</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Attraction here..: {{attraction?.geo.latitude}}
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
   </div>

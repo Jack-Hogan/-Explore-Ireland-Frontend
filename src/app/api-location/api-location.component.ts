@@ -30,6 +30,10 @@ export class ApiLocationComponent implements OnInit {
 
   public Attractions: any[];
   public favouriteAttraction;
+  
+  public attraction: Attraction;
+
+  public addSuccessAlert: boolean = false;
 
 
   constructor(
@@ -60,6 +64,7 @@ export class ApiLocationComponent implements OnInit {
       (response: Attraction) => {
         console.log(response);
         this.getApiLocations;
+        this.addSuccessAlert = true;
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
@@ -100,6 +105,10 @@ export class ApiLocationComponent implements OnInit {
         
     //   }
     // }
+  }
+
+  public clearAlert(){
+    this.addSuccessAlert = false;
   }
 
 
