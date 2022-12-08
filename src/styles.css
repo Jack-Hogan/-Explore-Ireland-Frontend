@@ -1,3 +1,6 @@
+
+  @import "~bootstrap/dist/css/bootstrap.css";
+
 body{margin-top:20px;
   background-color:rgb(255, 255, 255);
   }
@@ -7,7 +10,7 @@ body{margin-top:20px;
 
   /* Add a black background color to the top navigation */
 .topnav {
-    background-color: #333;
+    background-color: rgb(51, 51, 51);
     overflow: hidden;
   }
   
@@ -124,4 +127,3 @@ body{margin-top:20px;
   html {
     scroll-behavior: smooth;
   }
-  

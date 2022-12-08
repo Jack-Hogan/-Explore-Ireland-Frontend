@@ -6,8 +6,9 @@ import { Loader } from '@googlemaps/js-api-loader';
 import { map } from 'rxjs';
 import { Location } from '../location';
 
-import { LocationService } from '../location.service';
 import { styles } from '../mapstyles';
+import { LocationService } from '../_services/location.service';
+import { UserService } from '../_services/user.service';
 
 @Component({
   selector: 'app-favourites',
@@ -15,6 +16,9 @@ import { styles } from '../mapstyles';
   styleUrls: ['./favourites.component.css']
 })
 export class FavouritesComponent implements OnInit {
+
+  content?: string;
+
 
   public locations: Location[];
 
@@ -26,56 +30,70 @@ export class FavouritesComponent implements OnInit {
   map: google.maps.Map;
 
 
-  public markers : any[];
+  public markers: any[];
 
 
 
-  constructor(private locationService: LocationService) { }
+  constructor(private locationService: LocationService, private userService: UserService) { }
+
 
   ngOnInit() {
-      this.getLocations();
+
+    this.getLocations();
+    this.dropMarkers();
+
+  }
+
+  public dropMarkers(): void {
+    //window.location.reload();
+
+    let loader = new Loader({
+
+      apiKey: 'AIzaSyAtnef-bUY0IzKCU7AB2cw51swb9sjxftA'
+    })
+
+    loader.load().then(() => {
+      const map = new google.maps.Map(document.getElementById('map'), {
+        mapTypeId: 'terrain',
+        center: { lat: 53.56517289887375, lng: -7.762365749791302 },
+        zoom: 7,
+        styles: styles
+      });
 
 
 
-      let loader = new Loader({
+      this.locations.forEach(location => {
 
-        apiKey: 'AIzaSyAtnef-bUY0IzKCU7AB2cw51swb9sjxftA'
-      })
+        console.log(location.name, location.geo)
 
-      loader.load().then(() => {
-        const map = new google.maps.Map(document.getElementById('map'),{
-          mapTypeId: 'terrain',
-          center: {lat: 53.56517289887375, lng:-7.762365749791302},
-          zoom: 7,
-          styles: styles
+        var latitude = parseFloat(location.geo.latitude);
+        var longitude = parseFloat(location.geo.longitude);
+
+        new google.maps.Marker({
+          position: { lat: latitude, lng: longitude },
+          map,
+          title: location.name
         });
-
-        this.locations.forEach(location =>{
-
-          console.log(location.name,location.geo)
-  
-          var latitude = parseFloat(location.geo.latitude);
-          var longitude = parseFloat(location.geo.longitude);
-    
-          new google.maps.Marker({
-            position: {lat: latitude, lng: longitude},
-            map,
-            title: location.name
-          });
-    
-         
-
       })
-      
-      
-      })
-    }
+    })
+  }
 
+  // public getLocations(): void {
+  //   this.locationService.getLocations().subscribe(
+  //     (response: Location[]) =>{
+  //       this.locations = response;
+  //       this.arraySize = this.locations.length;
+  //     },
+  //     (error: HttpErrorResponse) => {
+  //       alert(error.message);
+  //     }
+  //   )
+  // };
 
-  public getLocations(): void {
+  public getLocations() {
     this.locationService.getLocations().subscribe(
-      (response: Location[]) =>{
-        this.locations = response;
+      (value: Location[]) => {
+        this.locations = value;
         this.arraySize = this.locations.length;
       },
       (error: HttpErrorResponse) => {
@@ -117,77 +135,53 @@ export class FavouritesComponent implements OnInit {
 
   public searchLocations(key: string): void {
 
-
-    // let loader = new Loader({
-    //   apiKey: 'AIzaSyAtnef-bUY0IzKCU7AB2cw51swb9sjxftA'
-    // })
-  
-    // loader.load().then(() => {
-    //   this.map = new google.maps.Map(document.getElementById('map'),{
-    //     mapTypeId: 'terrain',
-    //     center: {lat: latitude, lng:longitude},
-    //     zoom: 11,
-    //     styles: styles
-    //   })})
-   
     const results: Location[] = [];
-    for(const location of this.locations){
-      if(location.name.toLowerCase().indexOf(key.toLowerCase())  !== -1
-      || location.tags.toLowerCase().indexOf(key.toLowerCase())  !== -1
-      || location.addressLocality.toLowerCase().indexOf(key.toLowerCase())  !== -1
-      || location.addressRegion.toLowerCase().indexOf(key.toLowerCase())  !== -1){
+    for (const location of this.locations) {
+      if (location.name.toLowerCase().indexOf(key.toLowerCase()) !== -1
+        || location.tags.toLowerCase().indexOf(key.toLowerCase()) !== -1
+        || location.addressLocality.toLowerCase().indexOf(key.toLowerCase()) !== -1
+        || location.addressRegion.toLowerCase().indexOf(key.toLowerCase()) !== -1) {
         results.push(location);
-
-        // var latitude = parseFloat(location.latitude);
-        // var longitude = parseFloat(location.longitude);
-      
-
-        // const marker = new google.maps.Marker({
-        //   position: {lat: latitude,lng: longitude},
-        //   map:this.map
-        // }  )
-
-        
       }
     }
 
   }
-public onViewLocation(location: Location): void{
+  public onViewLocation(location: Location): void {
 
-  this.viewLocation = location;
+    this.viewLocation = location;
 
-  var latitude = parseFloat(location.geo.latitude);
-  var longitude = parseFloat(location.geo.longitude);
+    var latitude = parseFloat(location.geo.latitude);
+    var longitude = parseFloat(location.geo.longitude);
 
-  this.map = new google.maps.Map(document.getElementById('map'),{
-    mapTypeId: 'terrain',
-    center: {lat: latitude, lng:longitude},
-    zoom: 11,
-    styles: styles
-  })
+    this.map = new google.maps.Map(document.getElementById('map'), {
+      mapTypeId: 'terrain',
+      center: { lat: latitude, lng: longitude },
+      zoom: 11,
+      styles: styles
+    })
 
-  new google.maps.Marker({
-    position: {lat: latitude,lng: longitude},
-    map:this.map
-  }  )
-  
-}
+    new google.maps.Marker({
+      position: { lat: latitude, lng: longitude },
+      map: this.map
+    })
 
-  public onOpenModal(location: Location, mode: string): void{
+  }
+
+  public onOpenModal(location: Location, mode: string): void {
 
     const container = document.getElementById('main-container');
     const button = document.createElement('button');
     button.type = 'button';
     button.style.display = 'none';
     button.setAttribute('data-toggle', 'modal');
-    if (mode === 'add'){
+    if (mode === 'add') {
       button.setAttribute('data-target', '#addLocationModal');
     }
-    if (mode === 'edit'){
+    if (mode === 'edit') {
       this.editLocation = location;
       button.setAttribute('data-target', '#updateLocationModal');
     }
-    if (mode === 'delete'){
+    if (mode === 'delete') {
       this.deleteLocation = location;
       button.setAttribute('data-target', '#deleteLocationModal');
     }
