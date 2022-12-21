@@ -35,8 +35,6 @@
         </div>
     </div>
 
-
-
     <!--Location Rows-->
     <div class="row">
         <div class="col-lg-12">
@@ -75,13 +73,21 @@
                                         <li class="list-inline-item">
                                             <a (click)="onViewLocation(location)" data-bs-placement="top" title="Save"
                                                 class="px-2 text-primary"><i id="saveIcon"
-                                                    class="bx bx-star font-size-18"></i></a>
+                                                    class="bx bx-current-location font-size-18"></i></a>
                                         </li>
+                                     
+                                        <li class="list-inline-item">
+                                            <a (click)="onOpenModal(location, 'weather')" data-bs-toggle="tooltip"
+                                                data-bs-placement="top" title="Weather" class="px-2 text-warning"><i
+                                                    class="bx bx-sun font-size-18"></i></a>
+                                        </li>
+
                                         <li class="list-inline-item">
                                             <a (click)="onOpenModal(location, 'delete')" data-bs-toggle="tooltip"
                                                 data-bs-placement="top" title="Delete" class="px-2 text-danger"><i
                                                     class="bx bx-trash-alt font-size-18"></i></a>
                                         </li>
+
                                         <li class="list-inline-item dropdown">
                                             <a class="text-muted dropdown-toggle font-size-18 px-2" href="#"
                                                 role="button" data-bs-toggle="dropdown" aria-haspopup="true"><i
@@ -112,6 +118,35 @@
 
         </div>
     </div>
+
+
+    <!--Weather Modal-->
+    <div class="modal fade" id="weatherModal" tabindex="-1" role="dialog" aria-labelledby="weatherModal"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="weatherModal">Weather at {{weatherLocation?.name}}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body" id="weatherModalBody">
+                <div class="weatherWidgetRow" style="font-size: 32px;margin-top: 5px;"><img *ngIf="weatherData?.current.temp < 5" src="../assets/hot.png"> Current Temperature: {{weatherData?.current.temp | number: '1.0-0'}}°C</div>
+                <div class="weatherWidgetRow" style="font-size: 18px;margin-top: 5px;">Location: {{weatherLocation?.address.addressLocality}}</div>
+                <div class="weatherWidgetRow" style="font-size: 12px;">Rain: {{weatherData?.minutely[0].precipitation}}mm</div>
+                <div class="weatherWidgetRow" style="font-size: 12px;">Feels Like: {{weatherData?.current.feels_like | number: '1.0-0'}}°C</div>
+                <div class="weatherWidgetRow" style="font-size: 25px;margin-top: 10px;">Wind Speed: {{weatherData?.current.wind_speed}} km/h</div>
+                <div class="weatherWidgetRow" style="font-size: 12px;">Humidity: {{weatherData?.current.humidity}}%</div>
+                <div class="weatherWidgetRow" style="font-size: 12px;">Description: The weather at {{weatherLocation?.name}} has {{weatherData?.current.weather[0].description}}.</div>
+            
+            </div>
+        </div>
+    </div>
+</div>
+        
+   
 
 
     <!-- Add Location Modal -->

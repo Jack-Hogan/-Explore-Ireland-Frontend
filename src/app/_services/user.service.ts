@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Attraction } from '../api-location/api-location.component';
 
 const API_URL = 'http://localhost:8080/api/test/';
 
@@ -14,10 +13,6 @@ export class UserService {
   getPublicContent(): Observable<any> {
     return this.http.get(`${API_URL}/location/all`);
   }
-
-  // getUserBoard(): Observable<any> {
-  //   return this.http.get(API_URL + 'user', { responseType: 'text' });
-  // }
 
   public getLocations(): Observable<Location[]>{
     return this.http.get<Location[]>(API_URL + '/location/all' );
@@ -35,6 +30,5 @@ export class UserService {
   getAdminBoard(): Observable<any> {
     return this.http.get(API_URL + 'admin', { responseType: 'text' });
   }
-s
 
 }

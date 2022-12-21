@@ -71,9 +71,11 @@
                   <div class="form-check font-size-16"><input type="checkbox" class="form-check-input"
                       id="contacusercheck1" /><label class="form-check-label" for="contacusercheck1"></label></div>
                 </th>
-                <td><img src="https://cdn-icons-png.flaticon.com/512/1946/1946770.png" alt=""
-                    class="avatar-sm rounded-circle me-2" /><a href="{{attraction?.url}}"
-                    class="text-body">{{attraction?.name}}</a></td>
+                <td>
+                <!-- <td><img src="https://cdn-icons-png.flaticon.com/512/1946/1946770.png" alt="" class="avatar-sm rounded-circle me-2" /> -->
+                  <!-- <td><img  *ngIf=attraction?.tags.includes() src="assets/vacations.png" alt=""  /> -->
+
+                  <a href="{{attraction?.url}}" class="text-body">{{attraction?.name}}</a></td>
                 <td><span class="badge badge-soft-success mb-0">{{attraction?.address.addressLocality}},
                     {{attraction?.address.addressRegion}}</span></td>
 

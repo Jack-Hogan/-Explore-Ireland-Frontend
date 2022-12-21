@@ -3,3 +3,24 @@
       <p>{{ content }}</p>
     </header>
   </div>
+
+    <table  class="table table-bordered table-striped">
+      <thead>
+      <tr>
+        <th>Username</th>
+        <th>Email</th>
+        <th>Role</th>
+        <th>Pass</th>
+
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let user of users">
+        <td><span>{{user.username}}</span></td>
+        <td><span>{{user.email}}</span></td>
+        <td><span>{{user.roles[0].name}}</span></td>
+        <td><span>{{user.password}}</span></td>
+
+      </tr>
+      </tbody>
+    </table>

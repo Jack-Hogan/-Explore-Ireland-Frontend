@@ -1,4 +1,7 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { User } from '../models/user.model';
+import { AdminService } from '../_services/admin.service';
 import { UserService } from '../_services/user.service';
 
 @Component({
@@ -9,7 +12,9 @@ import { UserService } from '../_services/user.service';
 export class BoardAdminComponent implements OnInit {
   content?: string;
 
-  constructor(private userService: UserService) { }
+  public users: User[];
+
+  constructor(private userService: UserService, private adminService: AdminService) { }
 
   ngOnInit(): void {
     this.userService.getAdminBoard().subscribe({
@@ -24,5 +29,21 @@ export class BoardAdminComponent implements OnInit {
         }
       }
     });
+
+    this.getUsers();
+
+
+
+  }
+
+  public getUsers(){
+    this.adminService.getAllUsers().subscribe(
+      (response: User[]) => {
+        this.users = response;
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      }
+    )
   }
 }

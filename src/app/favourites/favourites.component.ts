@@ -7,8 +7,10 @@ import { map } from 'rxjs';
 import { Location } from '../location';
 
 import { styles } from '../mapstyles';
+import { WeatherData } from '../models/weather.model';
 import { LocationService } from '../_services/location.service';
 import { UserService } from '../_services/user.service';
+import { WeatherService } from '../_services/weather.service';
 
 @Component({
   selector: 'app-favourites',
@@ -22,9 +24,13 @@ export class FavouritesComponent implements OnInit {
 
   public locations: Location[];
 
+  public weatherData?: WeatherData;
+
+
   public editLocation: Location;
   public deleteLocation: Location;
   public viewLocation: Location;
+  public weatherLocation?: Location;
 
   public arraySize;
   map: google.maps.Map;
@@ -34,11 +40,11 @@ export class FavouritesComponent implements OnInit {
 
 
 
-  constructor(private locationService: LocationService, private userService: UserService) { }
+  constructor(private locationService: LocationService,private weatherService: WeatherService) { }
 
 
   ngOnInit() {
-
+    // window.location.reload();
     this.getLocations();
     this.dropMarkers();
 
@@ -46,6 +52,8 @@ export class FavouritesComponent implements OnInit {
 
   public dropMarkers(): void {
     //window.location.reload();
+
+    this.getLocations();
 
     let loader = new Loader({
 
@@ -60,35 +68,75 @@ export class FavouritesComponent implements OnInit {
         styles: styles
       });
 
+      var typeIcon: any;
+      var typeIconName: any;
 
-
+      // assets/map.png 
       this.locations.forEach(location => {
+ 
+        var tags = location.tags;
+
+        console.log(location.tags)
+        if (tags.includes("Surfing")){
+          typeIcon = "assets/surfing.png"
+          typeIconName = "Surfing"
+        }else if (tags.includes("Beach")){
+          typeIcon="assets/sun-umbrella.png"
+          typeIconName = "Beach"
+        }else if (tags.includes("Food and Drink")){
+          typeIcon="assets/dinner.png"
+          typeIconName = "Food & Drink"
+        }else if (tags.includes("Swimming")){
+          typeIcon="assets/swimmer.png"
+          typeIconName = "Swimming"
+        }else if (tags.includes("Walking")){
+          typeIcon="assets/hiking.png"
+          typeIconName = "Walking"
+        }else if (tags.includes("Golf")){
+          typeIcon="assets/birdie.png"
+          typeIconName = "Golf"
+        }else if (tags.includes("Cycling")){
+          typeIcon="assets/bicycle.png"
+          typeIconName = "Cycling"
+        }else{
+          typeIcon="assets/map2.png"
+        }
+
+      
 
         console.log(location.name, location.geo)
 
         var latitude = parseFloat(location.geo.latitude);
         var longitude = parseFloat(location.geo.longitude);
 
-        new google.maps.Marker({
+        var marker = new google.maps.Marker({
           position: { lat: latitude, lng: longitude },
           map,
-          title: location.name
+          title: location.name,
+          icon: typeIcon
         });
-      })
+
+        const contentString = '<div id="content"><app-weather></app-weather></div>'
+
+        const infowindow = new google.maps.InfoWindow({
+          content: "Greetings from " + location.name + contentString,
+          ariaLabel: "Uluru",
+        });
+        
+        marker.addListener("click", () => {
+
+          this.onOpenModal(location, 'weather');
+          // infowindow.open({
+          //   anchor: marker,
+          //   map,
+          // });
+        });
+      })//end of foreach
+
+
     })
   }
 
-  // public getLocations(): void {
-  //   this.locationService.getLocations().subscribe(
-  //     (response: Location[]) =>{
-  //       this.locations = response;
-  //       this.arraySize = this.locations.length;
-  //     },
-  //     (error: HttpErrorResponse) => {
-  //       alert(error.message);
-  //     }
-  //   )
-  // };
 
   public getLocations() {
     this.locationService.getLocations().subscribe(
@@ -160,9 +208,30 @@ export class FavouritesComponent implements OnInit {
       styles: styles
     })
 
+    
+    var tags = location.tags;
+    var type;
+
+    console.log(location.tags)
+    if (tags.includes("Surfing")){
+      type = "assets/surfing.png"
+    }else if (tags.includes("Beach")){
+      type="assets/sun-umbrella.png"
+    }else if (tags.includes("Food and Drink")){
+      type="assets/dinner.png"
+    }else if (tags.includes("Swimming")){
+      type="assets/swimmer.png"
+    }else if (tags.includes("Walking")){
+      type="assets/hiking.png"
+    }else{
+      type="assets/map2.png"
+    }
+
+
     new google.maps.Marker({
       position: { lat: latitude, lng: longitude },
-      map: this.map
+      map: this.map,
+      icon: type
     })
 
   }
@@ -185,9 +254,30 @@ export class FavouritesComponent implements OnInit {
       this.deleteLocation = location;
       button.setAttribute('data-target', '#deleteLocationModal');
     }
+    if (mode === 'weather') {
+      this.weatherLocation = location;
+      this.getLocationWeather(location);
+
+      button.setAttribute('data-target', '#weatherModal');
+    }
 
     container?.appendChild(button);
     button.click();
+  }
+
+  public getLocationWeather(location: Location) {
+    console.log(location.geo.latitude, location.geo.longitude)
+    this.weatherService.getWeatherDataByGeo(location.geo.latitude, location.geo.longitude)
+    .subscribe({
+      next: (response) => {
+        this.weatherData = response;
+        console.log(response);
+      }
+    });
+
+  
+    console.log(this.locations)
+
   }
 
 
