@@ -1,15 +1,16 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+// import { Location} from '@angular/common';
 import { NgForm } from '@angular/forms';
 import { GoogleMap, GoogleMapsModule } from '@angular/google-maps';
+import { Router } from '@angular/router';
 import { Loader } from '@googlemaps/js-api-loader';
-import { map } from 'rxjs';
-import { Location } from '../location';
+
+import Location from '../location';
 
 import { styles } from '../mapstyles';
 import { WeatherData } from '../models/weather.model';
 import { LocationService } from '../_services/location.service';
-import { UserService } from '../_services/user.service';
 import { WeatherService } from '../_services/weather.service';
 
 @Component({
@@ -36,19 +37,35 @@ export class FavouritesComponent implements OnInit {
   map: google.maps.Map;
 
 
-  public markers: any[];
+  // public markers: any[];
 
 
 
-  constructor(private locationService: LocationService,private weatherService: WeatherService) { }
+  constructor(private locationService: LocationService,private weatherService: WeatherService) { 
+    // this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+   }
 
+   
 
   ngOnInit() {
-    // window.location.reload();
-    this.getLocations();
-    this.dropMarkers();
 
+
+
+    const firstTime = localStorage.getItem('key')
+    if(!firstTime){
+     localStorage.setItem('key','loaded')
+     location.reload()
+    }else {
+      localStorage.removeItem('key') 
+    }
+
+    this.dropMarkers();
+    this.getLocations();
+  
   }
+
+  
+
 
   public dropMarkers(): void {
     //window.location.reload();
@@ -98,8 +115,10 @@ export class FavouritesComponent implements OnInit {
         }else if (tags.includes("Cycling")){
           typeIcon="assets/bicycle.png"
           typeIconName = "Cycling"
+        }else if (tags.includes("Fishing")){
+          typeIcon="assets/fishing.png"
         }else{
-          typeIcon="assets/map2.png"
+          typeIcon="assets/location.png"
         }
 
       
@@ -135,8 +154,8 @@ export class FavouritesComponent implements OnInit {
 
 
     })
+    
   }
-
 
   public getLocations() {
     this.locationService.getLocations().subscribe(
@@ -149,7 +168,6 @@ export class FavouritesComponent implements OnInit {
       }
     )
   };
-
 
   public onAddLocation(addForm: NgForm): void {
 
@@ -194,6 +212,7 @@ export class FavouritesComponent implements OnInit {
     }
 
   }
+
   public onViewLocation(location: Location): void {
 
     this.viewLocation = location;
@@ -223,16 +242,25 @@ export class FavouritesComponent implements OnInit {
       type="assets/swimmer.png"
     }else if (tags.includes("Walking")){
       type="assets/hiking.png"
+    }else if (tags.includes("Fishing")){
+      type="assets/fishing.png"
     }else{
-      type="assets/map2.png"
+      type="assets/location.png"
     }
 
 
+    //drop marker
     new google.maps.Marker({
       position: { lat: latitude, lng: longitude },
       map: this.map,
       icon: type
     })
+
+    //scroll to top of page 
+    document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+    document.body.scrollTop = 0; // For Safari
+
+
 
   }
 

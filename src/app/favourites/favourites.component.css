@@ -16,10 +16,10 @@
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 } */
 
-
+/* 
 #weatherModalBody{
     background-image: url("/assets/snowflake.jpg");
-    background-position: center; /* Center the image */
-    background-repeat: no-repeat; /* Do not repeat the image */
+    background-position: center; 
+    background-repeat: no-repeat; 
     background-size: cover;
-}
+} */

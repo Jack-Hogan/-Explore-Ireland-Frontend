@@ -17,7 +17,11 @@ export class WeatherService {
   }
 
   getWeatherDataByGeo(lat: String, lng: String): Observable<WeatherData>{
-    return this.http.get<WeatherData>(environment.weatherApiBaseUrl + 'lat=' +lat + '&lon=' + lng + '&units=metric&appid=bd5e18debb7b855ca2a7c04542ae1089')
+    return this.http.get<WeatherData>(environment.weatherApiBaseUrl + 'lat=' + lat + '&lon=' + lng + '&units=metric&appid=bd5e18debb7b855ca2a7c04542ae1089')
+  }
+
+  getCurrentLocationWeather(lat: String, lng: String){
+    return this.http.get(environment.currentWeatherLocationUrl + 'lat=' + lat + '&lon=' + lng + '&units=metric&appid=9e3323fb8310dc0473b40dd898d038f5')
   }
 }
 

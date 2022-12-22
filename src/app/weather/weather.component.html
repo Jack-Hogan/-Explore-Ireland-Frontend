@@ -1,9 +1,13 @@
 <div id="divWeatherMain">
-    <div class="weatherWidgetRow" style="font-size: 32px;margin-top: 5px;">Current Temperature: {{weatherData?.current.temp}}°</div>
-    <div class="weatherWidgetRow" style="font-size: 12px;">Rain: {{weatherData?.minutely[0].precipitation}}mm</div>
-    <div class="weatherWidgetRow" style="font-size: 12px;">Feels Like: {{weatherData?.current.feels_like}}°</div>
-    <div class="weatherWidgetRow" style="font-size: 25px;margin-top: 10px;">Wind Speed: {{weatherData?.current.wind_speed}}</div>
-    <div class="weatherWidgetRow" style="font-size: 12px;">Humidity: {{weatherData?.current.humidity}}%</div>
+    <div class="weatherWidgetRow" style="font-size: 32px;margin-top: 5px;">Location Name: {{weather?.name}}</div>
+    <div class="weatherWidgetRow" style="font-size: 32px;margin-top: 5px;">Current Temperature: {{weather?.main.temp}}°</div>
+	<div class="weatherWidgetRow" style="font-size: 12px;">Feels Like: {{weather?.main.feels_like}}°</div>
+
+    <!-- <div class="weatherWidgetRow" style="font-size: 12px;">Rain: {{weather?.minutely[0].precipitation}}mm</div> -->
+    <div class="weatherWidgetRow" style="font-size: 25px;margin-top: 10px;">Wind Speed: {{weather?.wind.speed}} km/h</div>
+    <div class="weatherWidgetRow" style="font-size: 12px;">Humidity: {{weather?.main.humidity}}%</div>
+	<div class="weatherWidgetRow" style="font-size: 18px;margin-top: 5px;">Sunrise: {{weather?.sys.sunrise*1000 | date:'H:m'}}</div>
+	<div class="weatherWidgetRow" style="font-size: 18px;margin-top: 5px;">Sunset: {{weather?.sys.sunset*1000 | date:'H:m'}}</div>
 
 </div>
 <br>

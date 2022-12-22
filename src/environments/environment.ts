@@ -6,6 +6,8 @@ export const environment = {
   production: false,
   apiBaseUrl: 'http://localhost:8080',
   weatherApiBaseUrl: 'https://api.openweathermap.org/data/2.5/onecall?', 
+  currentWeatherLocationUrl: 'https://api.openweathermap.org/data/2.5/weather?', 
+
 };
 
 /*

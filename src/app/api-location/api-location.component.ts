@@ -71,6 +71,10 @@ export class ApiLocationComponent implements OnInit {
         alert(error.message);
       }
     )
+
+    //scroll to top of page after adding favourite
+    document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+    document.body.scrollTop = 0; // For Safari
   }
 
   public searchAttractions(searchWord: string): void {
@@ -78,6 +82,21 @@ export class ApiLocationComponent implements OnInit {
 
     console.log('Getting result for: ', this.searchWord);
     this.attractionService.searchAllAttractions(searchWord).subscribe(
+      (response) => {
+        this.Attractions = response.results;
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      }
+    )
+
+  }
+
+  public searchByAddress(searchWord: string): void {
+
+
+    console.log('Getting result for: ', this.searchWord);
+    this.attractionService.searchByCity(searchWord).subscribe(
       (response) => {
         this.Attractions = response.results;
       },

@@ -12,6 +12,10 @@ import { WeatherService } from '../_services/weather.service';
 })
 export class WeatherComponent implements OnInit {
 
+  lat;
+  lng;
+  weather;
+
   public locations: Location[];
 
 
@@ -19,18 +23,34 @@ export class WeatherComponent implements OnInit {
   constructor(private weatherService: WeatherService, private locationService: LocationService) { }
 
   ngOnInit(): void {
-    this.weatherService.getWeatherData()
-    .subscribe({
-      next: (response) => {
-        this.weatherData = response;
-        console.log(response);
-      }
-    });
+
+    this.getLocation();
+    // this.weatherService.getWeatherData()
+    // .subscribe({
+    //   next: (response) => {
+    //     this.weatherData = response;
+    //     console.log(response);
+    //   }
+    // });
 
   
-    console.log(this.locations)
+    // console.log(this.locations)
 
   }
+
+  public getLocation(){
+    if("geolocation" in navigator){
+      navigator.geolocation.watchPosition((success)=>{
+
+        this.lat = success.coords.latitude;
+        this.lng = success.coords.longitude;
+
+        this.weatherService.getCurrentLocationWeather(this.lat, this.lng).subscribe(data=>{
+          this.weather = data;
+        });
+    })
+  }
+}
 
 
 

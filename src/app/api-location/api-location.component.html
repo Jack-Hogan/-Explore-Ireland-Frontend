@@ -9,6 +9,15 @@
     <button type="submit" (click)="searchAttractions(searchWord)">Search</button>
   </form>
 </div>
+
+
+<div>
+  <form class="form-inline my-2 my-lg-10">
+    <input type="text" [(ngModel)]="searchWord" #key="ngModel" ngModel="Search" name="search"
+      class="form-control mr-sm-2" placeholder="Search by area..." required>
+    <button type="submit" (click)="searchByAddress(searchWord)">Location</button>
+  </form>
+</div>
   <!-- <table  class="table table-bordered table-striped">
       <thead>
       <tr>

@@ -24,7 +24,7 @@
             <div class="d-flex flex-wrap align-items-center justify-content-end gap-2 mb-3">
                 <div>
                     <a (click)="onOpenModal(null, 'add')" data-bs-toggle="modal" data-bs-target=".add-new"
-                        class="btn btn-primary"><i class="bx bx-plus me-1"></i> Add New</a>
+                    class="btn btn-secondary"><i class="bx bx-plus me-1"></i> Add New</a>
                 </div>
 
                 <form class="form-inline my-2 my-lg-0">
@@ -43,28 +43,20 @@
                     <table class="table project-list-table table-nowrap align-middle table-borderless">
                         <thead>
                             <tr>
-                                <th scope="col" class="ps-4" style="width: 50px;">
-                                    <div class="form-check font-size-16"><input type="checkbox" class="form-check-input"
-                                            id="contacusercheck" /><label class="form-check-label"
-                                            for="contacusercheck"></label></div>
-                                </th>
                                 <th scope="col">Location Name</th>
                                 <th scope="col">Address</th>
                                 <th scope="col">Phone</th>
-                                <th scope="col" style="width: 200px;">Action</th>
+                                <th scope="col">Action</th>
                             </tr>
                         </thead>
+
                         <tbody *ngFor="let location of locations">
                             <tr>
-                                <th scope="row" class="ps-4">
-                                    <div class="form-check font-size-16"><input type="checkbox" class="form-check-input"
-                                            id="contacusercheck1" /><label class="form-check-label"
-                                            for="contacusercheck1"></label></div>
-                                </th>
                                 <td><img (click)="onViewLocation(location)"
                                         src="https://cdn-icons-png.flaticon.com/512/1946/1946770.png" alt=""
-                                        class="avatar-sm rounded-circle me-2" /><a href="{{location?.url}}"
-                                        class="text-body">{{location?.name}}</a></td>
+                                        class="avatar-sm rounded-circle me-2" /><a href="{{location?.url}}" target="_blank" rel="noopener noreferrer"
+                                        class="btn btn-info">{{location?.name}}</a></td>
+
                                 <td><span class="badge badge-soft-success mb-0">{{location?.address.addressLocality}} ,
                                         {{location?.address.addressRegion}}</span></td>
                                 <td>{{location?.telephone}}</td>
@@ -88,16 +80,6 @@
                                                     class="bx bx-trash-alt font-size-18"></i></a>
                                         </li>
 
-                                        <li class="list-inline-item dropdown">
-                                            <a class="text-muted dropdown-toggle font-size-18 px-2" href="#"
-                                                role="button" data-bs-toggle="dropdown" aria-haspopup="true"><i
-                                                    class="bx bx-dots-vertical-rounded"></i></a>
-                                            <div class="dropdown-menu dropdown-menu-end">
-                                                <a class="dropdown-item" href="#">Action</a><a class="dropdown-item"
-                                                    href="#">Another action</a><a class="dropdown-item"
-                                                    href="#">Something else here</a>
-                                            </div>
-                                        </li>
                                     </ul>
                                 </td>
                             </tr>
@@ -133,14 +115,22 @@
             </div>
 
             <div class="modal-body" id="weatherModalBody">
-                <div class="weatherWidgetRow" style="font-size: 32px;margin-top: 5px;"><img *ngIf="weatherData?.current.temp < 5" src="../assets/hot.png"> Current Temperature: {{weatherData?.current.temp | number: '1.0-0'}}°C</div>
+                <div class="weatherWidgetRow" style="font-size: 32px;margin-top: 5px;"> Current Temperature: <img *ngIf="weatherData?.current.temp < 5" src="../assets/snowflake.png"> {{weatherData?.current.temp | number: '1.0-0'}}°C</div>
                 <div class="weatherWidgetRow" style="font-size: 18px;margin-top: 5px;">Location: {{weatherLocation?.address.addressLocality}}</div>
-                <div class="weatherWidgetRow" style="font-size: 12px;">Rain: {{weatherData?.minutely[0].precipitation}}mm</div>
-                <div class="weatherWidgetRow" style="font-size: 12px;">Feels Like: {{weatherData?.current.feels_like | number: '1.0-0'}}°C</div>
-                <div class="weatherWidgetRow" style="font-size: 25px;margin-top: 10px;">Wind Speed: {{weatherData?.current.wind_speed}} km/h</div>
-                <div class="weatherWidgetRow" style="font-size: 12px;">Humidity: {{weatherData?.current.humidity}}%</div>
-                <div class="weatherWidgetRow" style="font-size: 12px;">Description: The weather at {{weatherLocation?.name}} has {{weatherData?.current.weather[0].description}}.</div>
-            
+                <div class="weatherWidgetRow" style="font-size: 18px;margin-top: 5px;">Sunrise: {{weatherData?.current.sunrise * 1000 | date:'H:m'}}</div>
+                <div class="weatherWidgetRow" style="font-size: 18px;margin-top: 5px;">Sunset: {{weatherData?.current.sunset * 1000 | date:'H:m'}}</div>
+                <div class="weatherWidgetRow" style="font-size: 18px;">Rain: {{weatherData?.minutely[0].precipitation}}mm</div>
+                <div class="weatherWidgetRow" style="font-size: 18px;">Feels Like: {{weatherData?.current.feels_like | number: '1.0-0'}}°C</div>
+                <div class="weatherWidgetRow" style="font-size: 18px;margin-top: 10px;">Wind Speed: {{weatherData?.current.wind_speed}} km/h</div>
+                <div class="weatherWidgetRow" style="font-size: 18px;">Humidity: {{weatherData?.current.humidity}}%</div>
+                <div class="weatherWidgetRow" style="font-size: 18px;">Description: The weather at {{weatherLocation?.name}} has {{weatherData?.current.weather[0].description}}.</div>
+                <div class="weatherWidgetRow" style="font-size: 18px;">Alerts: {{weatherLocation?.name}} : {{weatherData?.alerts[0].description}}.</div>
+
+                <!-- <iframe src="{{weatherLocation?.url}}" height="200" width="300" title="Iframe Example"></iframe>
+                <iframe src="{{weatherLocation?.url}}" style="height:200px;width:300px;" title="Iframe Example"></iframe> -->
+
+                <p>{{weatherLocation?.url}}</p>
+
             </div>
         </div>
     </div>
