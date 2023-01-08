@@ -2,42 +2,16 @@
 
 
 
-<div>
-  <form class="form-inline my-2 my-lg-10">
-    <input type="text" [(ngModel)]="searchWord" #key="ngModel" ngModel="Search" name="search"
-      class="form-control mr-sm-2" placeholder="Search locations..." required>
-    <button type="submit" (click)="searchAttractions(searchWord)">Search</button>
-  </form>
-</div>
+  <!--Search boxes for Failte Ireland API Function -->
+  <div class="justify-content-center">
+    <form class="form-inline my-2 my-lg-10">
+      <input type="text" [(ngModel)]="searchWord" #key="ngModel" ngModel="Search" name="search"
+        class="form-control mr-sm-2" placeholder="Search locations..." required>
+      <button type="submit" (click)="searchAttractions(searchWord)">Activity</button>
+      <button type="submit" (click)="searchByAddress(searchWord)">Title</button>
+    </form>
+  </div>
 
-
-<div>
-  <form class="form-inline my-2 my-lg-10">
-    <input type="text" [(ngModel)]="searchWord" #key="ngModel" ngModel="Search" name="search"
-      class="form-control mr-sm-2" placeholder="Search by area..." required>
-    <button type="submit" (click)="searchByAddress(searchWord)">Location</button>
-  </form>
-</div>
-  <!-- <table  class="table table-bordered table-striped">
-      <thead>
-      <tr>
-        <th>Name</th>
-        <th>Telephone</th>
-        <th>Url</th>
-        <th>Tags</th>
-
-      </tr>
-      </thead>
-      <tbody>
-      <tr *ngFor="let attraction of Attractions">
-        <td><span>{{attraction.name}}</span></td>
-        <td><span>{{attraction.telephone}}</span></td>
-        <td><span>{{attraction.url}}</span></td>
-        <td><span>{{attraction.tags}}</span></td>
-
-      </tr>
-      </tbody>
-    </table> -->
 
 
   <!--Successful addLocation Alert-->
@@ -55,57 +29,43 @@
       <div class="">
         <div class="table-responsive" id="main-container">
 
+          <!--Table for results-->
           <table class="table project-list-table table-nowrap align-middle table-borderless">
             <thead>
               <tr>
-                <th scope="col" class="ps-4" style="width: 50px;">
-                  <div class="form-check font-size-16"><input type="checkbox" class="form-check-input"
-                      id="contacusercheck" /><label class="form-check-label" for="contacusercheck"></label></div>
-                </th>
+
                 <th scope="col">Location Name</th>
                 <th scope="col">Address</th>
                 <th scope="col">Phone</th>
                 <!-- <th scope="col">Geo Location</th> -->
-
-                <th scope="col" style="width: 100%;">Action</th>
+                <th scope="col">Save</th>
               </tr>
             </thead>
 
-            <!--NG API Locations Table-->
-            <tbody *ngFor="let attraction of Attractions" >
+            <!--NG for statement: API Locations Table-->
+            <tbody *ngFor="let attraction of Attractions">
 
               <tr>
-
-                <th scope="row" class="ps-4">
-                  <div class="form-check font-size-16"><input type="checkbox" class="form-check-input"
-                      id="contacusercheck1" /><label class="form-check-label" for="contacusercheck1"></label></div>
-                </th>
-                <td>
-                <!-- <td><img src="https://cdn-icons-png.flaticon.com/512/1946/1946770.png" alt="" class="avatar-sm rounded-circle me-2" /> -->
-                  <!-- <td><img  *ngIf=attraction?.tags.includes() src="assets/vacations.png" alt=""  /> -->
-
-                  <a href="{{attraction?.url}}" class="text-body">{{attraction?.name}}</a></td>
+                <td><!--website embedded in title: Opens in new tab-->
+                  <a href="{{attraction?.url}}" target="_blank" rel="noopener noreferrer"
+                    class="text-body">{{attraction?.name}}</a>
+                </td>
                 <td><span class="badge badge-soft-success mb-0">{{attraction?.address.addressLocality}},
                     {{attraction?.address.addressRegion}}</span></td>
 
                 <td>{{attraction?.telephone}}</td>
                 <!-- <td>{{attraction?.geo.longitude}}, {{attraction?.geo.latitude}}</td> -->
 
-                <td>
+                <td><!--Add to Favourites-->
                   <ul class="list-inline mb-0">
                     <li class="list-inline-item">
                       <a (click)="addLocationToFavourites(attraction)" data-toggle="modal" data-target="#exampleModal"
                         data-bs-placement="top" title="Save" class="px-2 text-primary"><i id="saveIcon"
                           class="bx bx-star font-size-18"></i></a>
                     </li>
-                    <li class="list-inline-item">
-                      <a data-bs-toggle="tooltip" data-bs-placement="top" title="Delete" class="px-2 text-danger"><i
-                          class="bx bx-trash-alt font-size-18"></i></a>
-                    </li>
                   </ul>
                 </td>
               </tr>
-
             </tbody>
           </table>
         </div>
@@ -113,25 +73,3 @@
     </div>
   </div>
 </div>
-
-<!-- Modal -->
-<!-- <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-  aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">{{attraction?.name}}</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        Attraction here..: {{attraction?.geo.latitude}}
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-    </div>
-  </div>
-</div> -->

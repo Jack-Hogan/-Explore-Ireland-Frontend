@@ -6,6 +6,9 @@ import { AuthService } from '../_services/auth.service';
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
 })
+/**
+ * Registration component to allow unregistered users to signup
+ */
 export class RegisterComponent implements OnInit {
   form: any = {
     username: null,
@@ -21,13 +24,16 @@ export class RegisterComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  onSubmit(): void {
+  /**
+   * Submit registration method to send registartion details to the authorization service 
+   */
+  public onSubmit(): void {
     const { username, email, password } = this.form;
 
     this.authService.register(username, email, password).subscribe({
       next: data => {
         console.log(data);
-        this.isSuccessful = true;
+        this.isSuccessful = true;//successful registration
         this.isSignUpFailed = false;
       },
       error: err => {

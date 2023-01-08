@@ -1,26 +1,28 @@
 <div class="container">
-    <header class="jumbotron">
-      <p>{{ content }}</p>
-    </header>
-  </div>
+  <header class="jumbotron">
+    <p>{{ content }}</p>
+  </header>
 
-    <table  class="table table-bordered table-striped">
-      <thead>
+
+  <table class="table table-bordered table-striped">
+    <thead>
       <tr>
         <th>Username</th>
         <th>Email</th>
         <th>Role</th>
-        <th>Pass</th>
+        <th>Password</th>
 
       </tr>
-      </thead>
-      <tbody>
+    </thead>
+    <tbody>
       <tr *ngFor="let user of users">
         <td><span>{{user.username}}</span></td>
         <td><span>{{user.email}}</span></td>
-        <td><span>{{user.roles[0].name}}</span></td>
+        <td><span>{{user.roles[0].name}} </span><span *ngIf="user.roles[1] != null">, {{user.roles[1].name}}</span>
+        </td>
         <td><span>{{user.password}}</span></td>
 
       </tr>
-      </tbody>
-    </table>
+    </tbody>
+  </table>
+</div>

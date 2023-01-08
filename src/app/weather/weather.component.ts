@@ -10,47 +10,48 @@ import { WeatherService } from '../_services/weather.service';
   templateUrl: './weather.component.html',
   styleUrls: ['./weather.component.css']
 })
+/**
+ * Weather component to gather User location information and request GET from OpenWeatherAPI
+ */
 export class WeatherComponent implements OnInit {
 
   lat;
   lng;
   weather;
-
-  public locations: Location[];
-
-
   weatherData?: WeatherData;
+
+
   constructor(private weatherService: WeatherService, private locationService: LocationService) { }
 
   ngOnInit(): void {
 
     this.getLocation();
-    // this.weatherService.getWeatherData()
-    // .subscribe({
-    //   next: (response) => {
-    //     this.weatherData = response;
-    //     console.log(response);
-    //   }
-    // });
-
-  
-    // console.log(this.locations)
 
   }
 
-  public getLocation(){
-    if("geolocation" in navigator){
-      navigator.geolocation.watchPosition((success)=>{
+  /**
+   * Get location method.
+   * This method prompts user for their current location inside their browser.
+   * If the coordinates are retrieved they are sent to the weather Service where OpenWeatherAPI is called 
+   * 
+   */
+  public getLocation() {
+    if ("geolocation" in navigator) {
+      navigator.geolocation.watchPosition((success) => {
 
         this.lat = success.coords.latitude;
         this.lng = success.coords.longitude;
 
-        this.weatherService.getCurrentLocationWeather(this.lat, this.lng).subscribe(data=>{
+        this.weatherService.getCurrentLocationWeather(this.lat, this.lng).subscribe(data => {
           this.weather = data;
-        });
-    })
+          console.log(data)
+        },
+          (error: HttpErrorResponse) => {
+            alert(error.message);
+          });
+      })
+    }
   }
-}
 
 
 

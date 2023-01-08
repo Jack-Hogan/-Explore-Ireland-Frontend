@@ -1,35 +1,44 @@
-<div id="divWeatherMain">
-    <div class="weatherWidgetRow" style="font-size: 32px;margin-top: 5px;">Location Name: {{weather?.name}}</div>
-    <div class="weatherWidgetRow" style="font-size: 32px;margin-top: 5px;">Current Temperature: {{weather?.main.temp}}°</div>
-	<div class="weatherWidgetRow" style="font-size: 12px;">Feels Like: {{weather?.main.feels_like}}°</div>
+<div class="main-container" style="padding-top: 5%; padding-bottom: 5%;">
 
-    <!-- <div class="weatherWidgetRow" style="font-size: 12px;">Rain: {{weather?.minutely[0].precipitation}}mm</div> -->
-    <div class="weatherWidgetRow" style="font-size: 25px;margin-top: 10px;">Wind Speed: {{weather?.wind.speed}} km/h</div>
-    <div class="weatherWidgetRow" style="font-size: 12px;">Humidity: {{weather?.main.humidity}}%</div>
-	<div class="weatherWidgetRow" style="font-size: 18px;margin-top: 5px;">Sunrise: {{weather?.sys.sunrise*1000 | date:'H:m'}}</div>
-	<div class="weatherWidgetRow" style="font-size: 18px;margin-top: 5px;">Sunset: {{weather?.sys.sunset*1000 | date:'H:m'}}</div>
+	<div id="divWeatherMain">
+		<!--Current Location Weather Widget -->
+		<div class="weatherWidgetRow" style="font-size: 32px; margin-bottom: 16px;">Current Location: {{weather?.name}}
+		</div>
 
-</div>
-<br>
 
-<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+		<div class="row">
+			<div class="col-md-6"><img src="../assets/hot.png">: <img *ngIf="weather?.main.temp < 5"
+					src="../assets/snowflake.png"> {{weather?.main.temp | number: '1.0-0'}}°C </div>
+			<div class="col-md-6"><img src="../assets/wind.png">: {{weather?.wind.speed | number: '1.0-0'}} km/h</div>
+		</div>
 
-<div class="container">
-<div *ngFor="let location of locations" class="row row-cols-1 row-cols-md-2 row-cols-xl-4">
-       <div class="col">
-		 <div class="card radius-10 border-start border-0 border-3 border-info">
-			<div class="card-body">
-				<div class="d-flex align-items-center">
-					<div>
-						<p class="mb-0 text-secondary">Total Orders</p>
-						<h4 class="my-1 text-info">4805</h4>
-						<p class="mb-0 font-13">+2.5% from last week</p>
-					</div>
-					<div class="widgets-icons-2 rounded-circle bg-gradient-scooter text-white ms-auto"><i class="fa fa-shopping-cart"></i>
-					</div>
-				</div>
-			</div>
-		 </div>
-	   </div>
+		<div class="row">
+			<div class="col-md-6"><img src="../assets/sunrise.png">: {{weather?.sys.sunrise * 1000 | date:'H:m'}}</div>
+			<div class="col-md-6">Gusts: {{weather?.wind.gust | number: '1.0-0'}} km/h</div>
+
+		</div>
+		<div class="row">
+			<div class="col-md-6"><img src="../assets/sunset.png">: {{weather?.sys.sunset * 1000 | date:'H:m'}}</div>
+			<div class="col-md-6">Humidity: {{weather?.main.humidity}}%</div>
+
+		</div>
+
+		<div class="row">
+			<div class="col-md-6">Feels Like: {{weather?.main.feels_like | number: '1.0-0'}}°C</div>
+		</div>
+		<div class="row">
+
+			<div class="col-md-12">Description: The weather at {{weather?.name}} has
+				{{weather?.weather[0].description}}.</div>
+		</div>
+
+		<div class="row">
+			<div *ngIf="weather?.alerts != null" class="col-md-12" style="font-size: 20px;"><a id="weatherAlert">Weather
+					Alert!</a> For {{weather?.name}} : {{weather?.alerts[0].description}}</div>
+
+		</div>
+
 	</div>
-</div>
+	<br>
+
+</div><!--End of main container-->

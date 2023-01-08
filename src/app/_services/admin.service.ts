@@ -11,10 +11,13 @@ export class AdminService {
 
   private apiServerUrl = environment.apiBaseUrl;
 
-
   constructor(private http: HttpClient) { }
 
-  public getAllUsers() : Observable<User[]>{
+/**
+ * GET method to return list of users or an Admin
+ * @returns List of all Users for the Admin only application component. 
+ */
+  public getAllUsers(): Observable<User[]> {
     return this.http.get<User[]>(`${this.apiServerUrl}/admin/all`);
   }
 }

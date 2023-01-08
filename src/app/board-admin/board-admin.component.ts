@@ -9,19 +9,24 @@ import { UserService } from '../_services/user.service';
   templateUrl: './board-admin.component.html',
   styleUrls: ['./board-admin.component.css']
 })
+
 export class BoardAdminComponent implements OnInit {
   content?: string;
 
+  //User array to store list of users
   public users: User[];
+
 
   constructor(private userService: UserService, private adminService: AdminService) { }
 
+  //Get Admin board only for 'ADMIN' role
   ngOnInit(): void {
     this.userService.getAdminBoard().subscribe({
       next: data => {
         this.content = data;
       },
-      error: err => {console.log(err)
+      error: err => {
+        console.log(err)
         if (err.error) {
           this.content = JSON.parse(err.error).message;
         } else {
@@ -29,14 +34,13 @@ export class BoardAdminComponent implements OnInit {
         }
       }
     });
-
     this.getUsers();
-
-
-
   }
 
-  public getUsers(){
+  /**
+   * Method to get all users and store them in an array to be able to display to Administrator
+   */
+  public getUsers() {
     this.adminService.getAllUsers().subscribe(
       (response: User[]) => {
         this.users = response;

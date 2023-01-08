@@ -2,32 +2,31 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-const API_URL = 'http://localhost:8080/api/test/';
+//API Url to test 
+const API_URL = 'http://localhost:8080/api/v1/';
 
 @Injectable({
   providedIn: 'root',
 })
+
+/**
+ * This Service allows certain content HTTP GET methods based on roles
+ */
 export class UserService {
   constructor(private http: HttpClient) {}
 
-  getPublicContent(): Observable<any> {
-    return this.http.get(`${API_URL}/location/all`);
+  //public content
+  public getPublicContent(): Observable<any> {
+    return this.http.get(API_URL + 'home', { responseType: 'text' });
   }
 
-  public getLocations(): Observable<Location[]>{
-    return this.http.get<Location[]>(API_URL + '/location/all' );
-  }
-  
-
-  getUserBoard(): Observable<any> {
+  //user content
+  public getUserBoard(): Observable<any> {
     return this.http.get(API_URL + 'all', { responseType: 'text' });
   }
 
-  getModeratorBoard(): Observable<any> {
-    return this.http.get(API_URL + 'mod', { responseType: 'text' });
-  }
-
-  getAdminBoard(): Observable<any> {
+  //admin content
+  public getAdminBoard(): Observable<any> {
     return this.http.get(API_URL + 'admin', { responseType: 'text' });
   }
 

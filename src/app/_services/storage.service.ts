@@ -5,6 +5,10 @@ const USER_KEY = 'auth-user';
 @Injectable({
   providedIn: 'root'
 })
+
+/**
+ * StorageService keeps track of the session to determine user information and log in data
+ */
 export class StorageService {
   constructor() {}
 

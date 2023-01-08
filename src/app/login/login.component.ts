@@ -7,6 +7,9 @@ import { StorageService } from '../_services/storage.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
+/**
+ * Login Component: Tells Storage service (current session) if the user is logged in or not
+ */
 export class LoginComponent implements OnInit {
   form: any = {
     username: null,
@@ -28,7 +31,10 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  onSubmit(): void {
+  /**
+   * This method allows the user to submit the login form and will use the storage service to save the user to the session
+   */
+  public onSubmit(): void {
     const { username, password } = this.form;
 
     this.authService.login(username, password).subscribe({
@@ -47,7 +53,10 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  reloadPage(): void {
+  /**
+   * This method reloads the page once the user has logged in successfully
+   */
+  public reloadPage(): void {
     window.location.reload();
   }
 }

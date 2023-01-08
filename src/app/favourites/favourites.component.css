@@ -1,25 +1,48 @@
-.full{
+.full {
     width: 100vw;
     height: 80vh;
 }
 
-/* #weatherModalBody{
-    display: block;
-    position: relative;
-    border-radius: 10px;
-    margin: auto;
-    width: 400px;
-    height: 440px;
-    background: rgb(0,0,0);
-    background: linear-gradient(180deg, rgba(0,0,0,1) 0%, rgba(8,7,42,1) 75%, rgb(8, 10, 63) 100%);
-    color: white;;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-} */
+#weatherModalBody {
+    font-size: larger;
+}
 
-/* 
-#weatherModalBody{
-    background-image: url("/assets/snowflake.jpg");
-    background-position: center; 
-    background-repeat: no-repeat; 
-    background-size: cover;
-} */
+.upperWeatherBody .row {
+    margin-top: 24px;
+}
+
+.forecast {
+    display: grid;
+    grid-template-columns: repeat(6, 5rem);
+}
+
+.h2 {
+    grid-column: 1/-1;
+    color: #272323;
+    background-color: #ffb261;
+}
+
+.weatherHeader {
+    color: #ffb261;
+    background-color: #272323;
+    padding: 16px;
+    border-radius: 20%;
+}
+
+.weatherHeaderForecast {
+    color: #ffb261;
+    background-color: #272323;
+    padding: 12px;
+
+}
+
+#weatherAlert {
+    font-size: larger;
+    background-color: black;
+    color: red;
+    border-radius: 5%;
+    padding: 6px;
+    margin: 6px;
+    font-weight: 600;
+
+}

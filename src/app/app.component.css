@@ -1,9 +1,43 @@
-.full{
-    width: 100vw;
-    height: 80vh;
+.full {
+  width: 100vw;
+  height: 80vh;
 }
 
-/* .my-google-map{
-    width: 100vw;
-    height: 80vh;
-} */
+#banner {
+  background-color: #272323;
+}
+
+.navbar a:hover {
+
+  background-color: #272323;
+  color: #FFBE79;
+  font-size: medium;
+
+
+}
+
+.navbar a {
+  font-weight: 500;
+  color: #272323;
+}
+
+.navbar-brand {
+  transform: translateX(-50%);
+  left: 50%;
+  position: relative;
+}
+
+.navbar a.active {
+  background-color: #ff1111;
+}
+
+
+@media screen and (max-width: 500px) {
+  .navbar a {
+    float: none;
+    display: block;
+    width: 100%;
+    text-align: left;
+    /* If you want the text to be left-aligned on small screens */
+  }
+}
